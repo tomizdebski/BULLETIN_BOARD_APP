@@ -1,4 +1,5 @@
 {% load bootstrap4 %}
+{% load static %}
 
 <!doctype html>
 <html lang="pl">
@@ -6,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bulettin_board</title>
+    <title>The Bulettin Board</title>
 
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
@@ -15,7 +16,7 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
     <a class="navbar-brand" href="">
-        Tablica ogłoszeń
+        <b>The Bulettin Board</b>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -39,23 +40,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="">Praca</a>
             </li>
-
+            <li>
+            <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            </li>
 
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">Add annoucement</button>
+
+                </li>
+
                 <li class="nav-item">
                     <span class="navbar-text">Witaj, {{ user.username }}.</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Wyloguj</a>
+                    <a class="nav-link" href="{% url 'users:logout' %}">Wyloguj</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="">Rejestruj </a>
+                    <a class="nav-link" href="{% url 'users:register' %}">Rejestruj </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Zaloguj </a>
+                    <a class="nav-link" href="{% url 'users:login' %}">Zaloguj </a>
                 </li>
             {% endif %}
         </ul>
@@ -66,6 +78,15 @@
     <div class="pb-2 mb-2 border-bottom">
         {% block page_header %} {% endblock page_header %}
     </div>
+    <div class="card bg-dark text-white">
+            <img class="card-img" src="" alt="Card image">
+        <div class="card-img-overlay">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text">Last updated 3 mins ago</p>
+        </div>
+    </div>
+
     <div>
         {% block content %} {% endblock content %}
     </div>

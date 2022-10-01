@@ -38,8 +38,8 @@ class Announcement(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     locations = models.ForeignKey(Locations, on_delete=models.CASCADE)
 
-    def get_absolute_url(self):
-        return reverse("update_annoucement", args=(self.id,))
+    # def get_absolute_url(self):
+    #     return reverse("update_annoucement", args=(self.id,))
 
     def __str__(self):
         return f"{self.name} "

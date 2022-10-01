@@ -16,11 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 from account import views
-from bulettin_board_app.views import IndexHtmlView
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', IndexHtmlView.as_view()),
-    path('account/', include('account.urls'))
+    path('account/', include('account.urls')),
+    path('users/', include('users.urls')),
+    path('', include('bulettin_board_app.urls')),
+
 ]
+
