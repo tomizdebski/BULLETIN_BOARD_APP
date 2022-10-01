@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bulettin_board_app",
+    "bootstrap4"
 ]
 
 MIDDLEWARE = [

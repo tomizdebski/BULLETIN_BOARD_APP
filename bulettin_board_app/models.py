@@ -44,13 +44,15 @@ class Announcement(models.Model):
     def __str__(self):
         return f"{self.name} "
 
+
 REACTIONS = (
     (1, "like"),
     (2, "dislike"),
     (3, "love")
 )
 
-class Likes(models.Model): #reactions
+
+class Reactions(models.Model):  # reactions
     like = models.IntegerField(choices=REACTIONS)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)

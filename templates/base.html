@@ -1,17 +1,74 @@
-{% load static %}
+{% load bootstrap4 %}
+
 <!doctype html>
-<html lang="en">
+<html lang="pl">
 <head>
-    <title>{% block title %}{% endblock %}</title>
-    <link href="{% static "css/base.css"%}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bulettin_board</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
 </head>
 <body>
-    <div id="header">
-        <span class="logo">Tablica</span>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+    <a class="navbar-brand" href="">
+        Tablica ogłoszeń
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="">Elektronika</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Motoryzacja</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Moda</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Nieruchomści</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Praca</a>
+            </li>
+
+
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="navbar-text">Witaj, {{ user.username }}.</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Wyloguj</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="">Rejestruj </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Zaloguj </a>
+                </li>
+            {% endif %}
+        </ul>
     </div>
-    <div class="content">
-        {% block content %}
-        {% endblock %}
+</nav>
+
+<main role="main" class="container">
+    <div class="pb-2 mb-2 border-bottom">
+        {% block page_header %} {% endblock page_header %}
     </div>
+    <div>
+        {% block content %} {% endblock content %}
+    </div>
+</main>
 </body>
 </html>
