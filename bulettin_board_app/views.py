@@ -15,7 +15,6 @@ class IndexHtmlView(View):
         ctx = {
             "annoucements": annoucements,
             "photos": photos
-
         }
 
         return render(request, "bulettin_board_app/index.html", ctx)

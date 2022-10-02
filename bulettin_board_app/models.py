@@ -38,8 +38,8 @@ class Announcement(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     locations = models.ForeignKey(Locations, on_delete=models.CASCADE)
 
-    # def get_absolute_url(self):
-    #     return reverse("update_annoucement", args=(self.id,))
+    def get_absolute_url(self):
+        return reverse("add_announce", args=(self.id,))
 
     def __str__(self):
         return f"{self.name} "
@@ -67,5 +67,5 @@ class Preferences(models.Model):
 
 class Photos(models.Model):
     name = models.CharField(max_length=100)
-    img = models.ImageField(upload_to="media")
+    img = models.ImageField(upload_to="images/")
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)

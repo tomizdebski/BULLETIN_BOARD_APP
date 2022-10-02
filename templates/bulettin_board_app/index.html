@@ -7,7 +7,7 @@
 
     {% for announce in  annoucements %}
       <div class="card">
-        <img class="card-img-top" src="{% static "logo.jpg" %}" alt="Card image cap">
+        <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="300">
         <div class="card-body">
           <h5 class="card-title">{{ announce }}</h5>
             <p class="card-text">{{ announce.description }}</p>
