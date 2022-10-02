@@ -4,6 +4,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,7 +16,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
-    <a class="navbar-brand" href="">
+    <a class="navbar-brand" href="{% url "index" %}">
         <b>The Bulettin Board</b>
     </a>
 
@@ -52,7 +53,7 @@
             {% if user.is_authenticated %}
 
                 <li class="nav-item">
-                    <button type="button" class="btn btn-primary">Add annoucement</button>
+                    <a href="{% url 'add_announce' %}"><button type="button" class="btn btn-primary">Add annoucement</button></a>
 
                 </li>
 
@@ -79,12 +80,12 @@
         {% block page_header %} {% endblock page_header %}
     </div>
     <div class="card bg-dark text-white">
-            <img class="card-img" src="" alt="Card image">
-        <div class="card-img-overlay">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text">Last updated 3 mins ago</p>
-        </div>
+            <img class="card-img" src="{% static "logo.jpg" %}" alt="Card image">
+{#        <div class="card-img-overlay">#}
+{#            <h5 class="card-title">Card title</h5>#}
+{#            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>#}
+{#            <p class="card-text">Last updated 3 mins ago</p>#}
+{#        </div>#}
     </div>
 
     <div>
