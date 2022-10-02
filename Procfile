@@ -1,0 +1,1 @@
+web: gunicorn BulettinBoard.wsgi --log-file -
