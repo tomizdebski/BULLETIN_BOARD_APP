@@ -124,7 +124,7 @@ except ModuleNotFoundError:
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-#
+# heroku
 LOGIN_URL = 'users:login'
 import django_heroku
 django_heroku.settings(locals())

@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Locations(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, default="")
     description = models.TextField(default="")
     city = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
@@ -66,6 +66,6 @@ class Preferences(models.Model):
 
 
 class Photos(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='')
     img = models.ImageField(upload_to="images/")
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
