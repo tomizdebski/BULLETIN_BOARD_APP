@@ -7,21 +7,17 @@
 
     {% for announce in  annoucements %}
       <div class="card">
-        <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="300">
-        <div class="card-body">
-          <h5 class="card-title">{{ announce }}</h5>
+        {% for photo in announce.photos_set.all%}
+            <img class="card-img-top" src="{{ photo.img.url }}" alt="Card image cap" height="300">
+        {% endfor %}
+            <div class="card-body">
+            <h5 class="card-title">{{ announce }}</h5>
             <p class="card-text">{{ announce.description }}</p>
             <p class="card-text">{{ announce.locations }}</p>
+            <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-info">Szczegóły</button></a>
         </div>
       </div>
     {% endfor %}
-
-
-
-
-
-
-
 </div>
 
 {% endblock content %}

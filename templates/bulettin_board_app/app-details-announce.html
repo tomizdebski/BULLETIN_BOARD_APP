@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{% endblock title %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">Szczegóły ogłoszenia</h1>
+  <p class="lead">{{ annoucement }}</p>
+  <hr class="my-4">
+    <h4>Opis:</h4>
+  <p>{{ annoucement.description }}</p>
+    <hr class="my-4">
+    <h4>Adres</h4>
+    <p>Miasto: {{ locations.city }}</p>
+    <p>Ulica: {{ locations.street }}</p>
+    <p>Województwo: {{ locations.province }}</p>
+    <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="800">
+  <p class="lead">
+      <a class="btn btn-warning btn-lg" href="#" role="button">Edytuj</a>
+      <a class="btn btn-danger btn-lg" href="#" role="button">Kasuj</a>
+      <a class="btn btn-success btn-lg" href="#" role="button">Napisz wiadomość</a>
+  </p>
+
+</div>
+
+
+
+
+{% endblock content %}

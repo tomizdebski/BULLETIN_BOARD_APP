@@ -2,7 +2,7 @@ from random import shuffle
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import CreateView
 
@@ -12,8 +12,8 @@ from bulettin_board_app.models import Announcement, Photos, Category, Locations
 
 class IndexView(View):
     def get(self, request):
-        annoucements = Announcement.objects.all()
-        photos = Photos.objects.first()
+        annoucements = Announcement.objects.order_by('-id')
+        photos = Photos.objects.filter(announcement__in=annoucements)
 
         ctx = {
             "annoucements": annoucements,
@@ -28,12 +28,10 @@ class AddAnnounceViewTest(View):
         return render(request, "bulettin_board_app/app-add-annouce.html")
 
     def post(self, request):
-
         name = request.POST.get("name")
         description = request.POST.get('description')
-        user = User.objects.get(is_staff=True)
+        user = request.user
         category = request.POST.get('category')
-
         city = request.POST.get("city")
         street = request.POST.get("street")
         province = request.POST.get("province")
@@ -50,18 +48,20 @@ class AddAnnounceViewTest(View):
             photos = Photos.objects.create(img=image, announcement_id=annoucement.id)
 
             return redirect('index')
-def new_annoucement(request):
-    if request.method != 'POST':
-        form = AnnoucementForm()
-    else:
-        form = AnnoucementForm(data=request.POST)
-        if form.is_valid():
-            new_topic = form.save(commit=False)
-            new_topic.owner = request.user
-            new_topic.save()
-            return redirect('index')
-    context = {'form': form}
-    return render(request, 'bulettin_board_app/app-add-annouce.html', context)
 
 
+class DetaliAnnounceId(View):
+    template_name = "bulettin_board_app/app-details-announce.html"
 
+    def get(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        locations = Locations.objects.get(id=annoucement.locations_id)
+        photos = Photos.objects.get(announcement_id=id)
+        category = Category.objects.get(id=annoucement.category_id)
+        ctx = {
+            "annoucement": annoucement,
+            "locations": locations,
+            "photos": photos,
+            "category": category
+        }
+        return render(request, self.template_name, ctx)
