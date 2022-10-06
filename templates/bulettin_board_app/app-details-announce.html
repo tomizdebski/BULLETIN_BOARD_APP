@@ -12,10 +12,14 @@
     <p>Miasto: {{ locations.city }}</p>
     <p>Ulica: {{ locations.street }}</p>
     <p>Województwo: {{ locations.province }}</p>
+
+    {% if photos %}
     <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="800">
+    {% endif %}
+
   <p class="lead">
       <a class="btn btn-warning btn-lg" href="#" role="button">Edytuj</a>
-      <a class="btn btn-danger btn-lg" href="#" role="button">Kasuj</a>
+      <a class="btn btn-danger btn-lg" href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a>
       <a class="btn btn-success btn-lg" href="#" role="button">Napisz wiadomość</a>
   </p>
 

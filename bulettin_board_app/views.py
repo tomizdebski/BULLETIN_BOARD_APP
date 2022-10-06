@@ -36,7 +36,7 @@ class AddAnnounceView(View):
         street = request.POST.get("street")
         province = request.POST.get("province")
 
-        if len(request.FILES) != 0:
+        if len(request.FILES) != 0 and name and description and user and category and city and street and province:
             image = request.FILES['image1']
             locations = Locations.objects.create(city=city, street=street, province=province)
             annoucement = Announcement.objects.create(name=name,
@@ -45,8 +45,15 @@ class AddAnnounceView(View):
                                                       locations_id=locations.id,
                                                       user_id=user.id,
                                                       )
-            photos = Photos.objects.create(img=image, announcement_id=annoucement.id)
-
+            Photos.objects.create(img=image, announcement_id=annoucement.id)
+        else:
+            locations = Locations.objects.create(city=city, street=street, province=province)
+            Announcement.objects.create(name=name,
+                                        description=description,
+                                        category_id=category,
+                                        locations_id=locations.id,
+                                        user_id=user.id,
+                                        )
 
             return redirect('index')
 
@@ -57,15 +64,23 @@ class DetaliAnnounceIdView(View):
     def get(self, request, id):
         annoucement = Announcement.objects.get(id=id)
         locations = Locations.objects.get(id=annoucement.locations_id)
-        photos = Photos.objects.get(announcement_id=id)
         category = Category.objects.get(id=annoucement.category_id)
-        ctx = {
-            "annoucement": annoucement,
-            "locations": locations,
-            "photos": photos,
-            "category": category
-        }
-        return render(request, self.template_name, ctx)
+        try:
+            photos = Photos.objects.get(announcement_id=id)
+            ctx = {
+                "annoucement": annoucement,
+                "locations": locations,
+                "photos": photos,
+                "category": category
+            }
+            return render(request, self.template_name, ctx)
+        except Photos.DoesNotExist:
+            ctx = {
+                "annoucement": annoucement,
+                "locations": locations,
+                "category": category
+            }
+            return render(request, self.template_name, ctx)
 
 
 class MyAnnounceView(View):
@@ -80,3 +95,10 @@ class MyAnnounceView(View):
         }
 
         return render(request, "bulettin_board_app/index.html", ctx)
+
+
+class DeleteView(View):
+    def get(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        annoucement.delete()
+        return redirect("my_announce")
