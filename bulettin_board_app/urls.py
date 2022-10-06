@@ -1,14 +1,15 @@
 from django.urls import path, include
 from . import views
-from .views import IndexView, AddAnnounceViewTest, DetaliAnnounceId
+from .views import IndexView, AddAnnounceView, DetaliAnnounceIdView, MyAnnounceView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
 
     path('', IndexView.as_view(), name="index"),
-    path('add-announce/', AddAnnounceViewTest.as_view(), name="add_announce"),
-    path('details-announce/<int:id>', DetaliAnnounceId.as_view(), name="details_announce")
+    path('add-announce/', AddAnnounceView.as_view(), name="add_announce"),
+    path('details-announce/<int:id>', DetaliAnnounceIdView.as_view(), name="details_announce"),
+    path('my-announce/', MyAnnounceView.as_view(), name="my_announce")
 
 ]
 

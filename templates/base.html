@@ -50,8 +50,12 @@
 
         </ul>
         <ul class="navbar-nav ml-auto">
+            <a href="{% url 'my_announce' %}">
+                        <button class="btn btn-primary" type="submit">MOJE</button>
+            </a>
+
              <a href="{% url 'add_announce' %}">
-                        <button class="btn btn-warning" type="submit">DODAJ OGŁOSZENIE</button>
+                        <button class="btn btn-warning" type="submit">DODAJ</button>
              </a>
             {% if user.is_authenticated %}
 

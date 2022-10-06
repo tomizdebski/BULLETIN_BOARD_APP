@@ -23,7 +23,7 @@ class IndexView(View):
         return render(request, "bulettin_board_app/index.html", ctx)
 
 
-class AddAnnounceViewTest(View):
+class AddAnnounceView(View):
     def get(self, request):
         return render(request, "bulettin_board_app/app-add-annouce.html")
 
@@ -47,10 +47,11 @@ class AddAnnounceViewTest(View):
                                                       )
             photos = Photos.objects.create(img=image, announcement_id=annoucement.id)
 
+
             return redirect('index')
 
 
-class DetaliAnnounceId(View):
+class DetaliAnnounceIdView(View):
     template_name = "bulettin_board_app/app-details-announce.html"
 
     def get(self, request, id):
@@ -65,3 +66,17 @@ class DetaliAnnounceId(View):
             "category": category
         }
         return render(request, self.template_name, ctx)
+
+
+class MyAnnounceView(View):
+    def get(self, request):
+        user = request.user
+        annoucements = Announcement.objects.filter(user_id=user.id)
+        photos = Photos.objects.filter(announcement__in=annoucements)
+
+        ctx = {
+            "annoucements": annoucements,
+            "photos": photos
+        }
+
+        return render(request, "bulettin_board_app/index.html", ctx)
