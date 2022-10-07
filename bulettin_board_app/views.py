@@ -25,6 +25,7 @@ class IndexView(View):
 
 class AddAnnounceView(View):
     def get(self, request):
+
         return render(request, "bulettin_board_app/app-add-annouce.html")
 
     def post(self, request):
@@ -102,3 +103,56 @@ class DeleteView(View):
         annoucement = Announcement.objects.get(id=id)
         annoucement.delete()
         return redirect("my_announce")
+
+
+class EditView(View):
+
+    template_name = "bulettin_board_app/app-edit-announce.html"
+
+    def get(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        locations = Locations.objects.get(id=annoucement.locations_id)
+        category = Category.objects.get(id=annoucement.category_id)
+        try:
+            photos = Photos.objects.get(announcement_id=id)
+            ctx = {
+                "annoucement": annoucement,
+                "locations": locations,
+                "photos": photos,
+                "category": category
+            }
+            return render(request, self.template_name, ctx)
+        except Photos.DoesNotExist:
+            ctx = {
+                "annoucement": annoucement,
+                "locations": locations,
+                "category": category
+            }
+            return render(request, self.template_name, ctx)
+
+    def post(self, request, id):
+
+        annoucement = Announcement.objects.get(id=id)
+        locations = Locations.objects.get(id=annoucement.locations_id)
+        photos = Photos.objects.get(announcement_id=id)
+
+        annoucement.name = request.POST.get("name")
+        annoucement.description = request.POST.get('description')
+        annoucement.user_id = request.user.id
+        annoucement.category_id = request.POST.get('category')
+        locations.city = request.POST.get("city")
+        locations.street = request.POST.get("street")
+        locations.province = request.POST.get("province")
+
+        if len(request.FILES) != 0:
+            photos.img = request.FILES['image1']
+            photos.announcement_id = annoucement.id
+            annoucement.save()
+            locations.save()
+            photos.save()
+
+        else:
+            annoucement.save()
+            locations.save()
+
+        return redirect('details_announce', id=id)

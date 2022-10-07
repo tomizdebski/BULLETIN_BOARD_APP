@@ -10,6 +10,7 @@ urlpatterns = [
     path('details-announce/<int:id>', views.DetaliAnnounceIdView.as_view(), name="details_announce"),
     path('my-announce/', views.MyAnnounceView.as_view(), name="my_announce"),
     path('delete/<int:id>', views.DeleteView.as_view(), name="delete"),
+    path('edit/<int:id>', views.EditView.as_view(), name="edit"),
 
 ]
 

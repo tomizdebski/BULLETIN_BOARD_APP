@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<form class="row g-3 needs-validation" novalidate method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    <div class="col-md-8"><h1>Edytowanie ogłoszenia</h1></div>
+
+
+
+    <div class="col-md-6">
+        <div class="form-outline">
+            <label for="validationCustom01" class="form-label"><h4>Nazwa</h4></label>
+            <input type="text" class="form-control" id="validationCustom01"  required name="name" value="{{ annoucement }}"/>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="inputCategory"><h4>Kategoria</h4></label>
+      <select id="inputCategory" class="form-control" name="category" >
+            <option value="{{ category.id }}"selected>{{ category.name }}</option>
+            <option value="1">Elektronika</option>
+            <option value="2">Motoryzacja</option>
+            <option value="3">Moda</option>
+            <option value="4">Nieruchomości</option>
+            <option value="5">Praca</option>
+      </select>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-outline">
+              <label class="validationCustom02" for="textAreaExample"><h4>Opis</h4></label>
+            <textarea class="form-control" id="validationCustom02" rows="4" required name="description" >{{ annoucement.description }}</textarea>
+            <div class="valid-feedback">Looks good!</div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-outline">
+            <label for="validationCustom01" class="form-label"><h4>Miejscowość</h4></label>
+            <input type="text" class="form-control" id="validationCustom01"  required name="city" value="{{ locations.city }}"/>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-outline">
+            <label for="validationCustom01" class="form-label"><h4>Ulica</h4></label>
+            <input type="text" class="form-control" id="validationCustom01"  required name="street" value="{{ locations.street }}"/>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-outline">
+            <label for="validationCustom01" class="form-label"><h4>Województwo</h4></label>
+            <input type="text" class="form-control" id="validationCustom01"  required name="province" value="{{ locations.province }}"/>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+    </div>
+
+
+
+    <hr>
+    <div class="col-md-6">
+    <div class="form-outline">
+
+            <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="300">
+
+        <label for="validationCustom03" class="form-label"><h4>Dodaj zdjęcie 1:</h4></label>
+        <input class="form-control" type="file" id="validationCustom03" required name="image1" />
+        <div class="valid-feedback">Looks good!</div>
+    </div>
+    </div>
+
+{#    <div class="col-md-4">#}
+{#    <div class="form-outline">#}
+{#        <label for="validationCustom04" class="form-label">Dodaj zdjęcie 2:</label>#}
+{#        <input class="form-control" type="file" id="validationCustom04" required name="image2"/>#}
+{#        <div class="valid-feedback">Looks good!</div>#}
+{#    </div>#}
+{#    </div>#}
+{##}
+{#    <div class="col-md-4">#}
+{#    <div class="form-outline">#}
+{#        <label for="validationCustom05" class="form-label">Dodaj zdjęcie 3:</label>#}
+{#        <input class="form-control" type="file" id="validationCustom05" required name="image3"/>#}
+{#        <div class="valid-feedback">Looks good!</div>#}
+{#    </div>#}
+{#    </div>#}
+
+
+
+  <div class="col-md-12">
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Zapisz</button>
+  </div>
+
+</form>
+
+{% endblock content %}
