@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{% endblock title %}
+{% block content %}
+
+
+<form method="post" action="" id="contact_form">
+    {% csrf_token %}
+     <div class="form-group">
+         <h3></h3>
+    <label for="exampleFormControlInput1"><b>Napisz wiadomość do ogłoszenia : {{ annoucement }}</b></label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="podaj maila do kontaktu w formacie name@example.com" name="email">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1"><b>Wybierz temat:</b></label>
+    <select class="form-control" id="exampleFormControlSelect1" name="topic">
+      <option value="kupię">Kupię</option>
+      <option value="sprzedam">Sprzedam</option>
+      <option value="jestem zainteresowany">Jestem zainteresowany</option>
+      <option value="mam problem z ogoszeniem">Mam problem z ogłoszeniem</option>
+      <option value="kontakt">Kontakt</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="Napisz wiadomość" name="message"></textarea>
+  </div>
+
+     <p class="lead"><button type="submit" class="btn btn-secondary" id="sendBtn">Wyślij</button></p>
+
+</form>
+
+
+{% endblock content %}
