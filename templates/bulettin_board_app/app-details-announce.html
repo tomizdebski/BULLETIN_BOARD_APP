@@ -20,12 +20,9 @@
   <p class="lead">
       <a class="btn btn-warning btn-lg" href="{% url 'edit' annoucement.id %}" role="button">Edytuj</a>
       <a class="btn btn-danger btn-lg" href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a>
-      <a class="btn btn-success btn-lg" href="#" role="button">Napisz wiadomość</a>
+      <a class="btn btn-success btn-lg" href="{% url 'send_email' annoucement.id %}" role="button">Napisz wiadomość</a>
   </p>
 
 </div>
-
-
-
 
 {% endblock content %}

@@ -8,9 +8,11 @@ from django.views.generic import CreateView
 
 from bulettin_board_app.forms import AnnoucementForm
 from bulettin_board_app.models import Announcement, Photos, Category, Locations
+from django.core.mail import send_mail
 
 
 class IndexView(View):
+
     def get(self, request):
         annoucements = Announcement.objects.order_by('-id')
         photos = Photos.objects.filter(announcement__in=annoucements)
@@ -24,6 +26,7 @@ class IndexView(View):
 
 
 class AddAnnounceView(View):
+
     def get(self, request):
 
         return render(request, "bulettin_board_app/app-add-annouce.html")
@@ -60,6 +63,7 @@ class AddAnnounceView(View):
 
 
 class DetaliAnnounceIdView(View):
+
     template_name = "bulettin_board_app/app-details-announce.html"
 
     def get(self, request, id):
@@ -85,6 +89,7 @@ class DetaliAnnounceIdView(View):
 
 
 class MyAnnounceView(View):
+
     def get(self, request):
         user = request.user
         annoucements = Announcement.objects.filter(user_id=user.id)
@@ -99,6 +104,7 @@ class MyAnnounceView(View):
 
 
 class DeleteView(View):
+
     def get(self, request, id):
         annoucement = Announcement.objects.get(id=id)
         annoucement.delete()
@@ -156,3 +162,37 @@ class EditView(View):
             locations.save()
 
         return redirect('details_announce', id=id)
+
+
+class SendEmailView(View):
+
+    def get(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        return render(request, 'bulettin_board_app/app-send-email.html', {'annoucement': annoucement})
+
+    def post(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        email_sender = request.POST.get("email")
+        topic = request.POST.get("topic")
+        message = request.POST.get("desription")
+        email_announce = "tomizdebski@gmail.com"
+        send_mail(topic, message, email_sender, [email_announce], fail_silently=False)
+
+
+        return redirect("details_announce", id=annoucement.id)
+
+
+class ByCategoryView(View):
+
+    def get(self, request, id_category):
+        annoucements = Announcement.objects.filter(category_id=id_category)
+        photos = Photos.objects.filter(announcement__in=annoucements)
+
+
+        ctx = {
+            "annoucements": annoucements,
+            "photos": photos
+        }
+
+        return render(request, "bulettin_board_app/app-view-by-category.html", ctx)
+
