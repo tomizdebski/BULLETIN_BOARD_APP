@@ -14,12 +14,15 @@ from django.core.mail import send_mail
 class IndexView(View):
 
     def get(self, request):
-        annoucements = Announcement.objects.order_by('-id')
+        annoucements = Announcement.objects.all()
         photos = Photos.objects.filter(announcement__in=annoucements)
+
 
         ctx = {
             "annoucements": annoucements,
-            "photos": photos
+            "photos": photos,
+
+
         }
 
         return render(request, "bulettin_board_app/index.html", ctx)
@@ -63,7 +66,6 @@ class AddAnnounceView(View):
 
 
 class DetaliAnnounceIdView(View):
-
     template_name = "bulettin_board_app/app-details-announce.html"
 
     def get(self, request, id):
@@ -112,7 +114,6 @@ class DeleteView(View):
 
 
 class EditView(View):
-
     template_name = "bulettin_board_app/app-edit-announce.html"
 
     def get(self, request, id):
@@ -178,7 +179,6 @@ class SendEmailView(View):
         email_announce = "tomizdebski@gmail.com"
         send_mail(topic, message, email_sender, [email_announce], fail_silently=False)
 
-
         return redirect("details_announce", id=annoucement.id)
 
 
@@ -188,11 +188,9 @@ class ByCategoryView(View):
         annoucements = Announcement.objects.filter(category_id=id_category)
         photos = Photos.objects.filter(announcement__in=annoucements)
 
-
         ctx = {
             "annoucements": annoucements,
             "photos": photos
         }
 
         return render(request, "bulettin_board_app/app-view-by-category.html", ctx)
-
