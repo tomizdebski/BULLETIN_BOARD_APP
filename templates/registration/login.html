@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% load socialaccount %}
 
 {% block page_header %}
   <h2>Zaloguj się do konta</h2>
@@ -12,6 +13,18 @@
     {% buttons %}
       <button name="submit" class="btn btn-primary">Zaloguj</button>
     {% endbuttons %}
+    <a href="{% provider_login_url 'github' %}" class="btn btn-secondary">
+      <i class="fa fa-github fa-fw"></i>
+      <span>Login with GitHub</span>
+    </a>
+    <!-- GitHub button ends here -->
+      <!-- Twitter button starts here -->
+      </a>
+      <a href="{% provider_login_url 'twitter' %}" class="btn btn-primary">
+        <i class="fa fa-twitter fa-fw"></i>
+        <span>Login with Twitter</span>
+      </a>
+
         <input type="hidden" name="next"
                value="{% url 'index' %}" />
     </form>
