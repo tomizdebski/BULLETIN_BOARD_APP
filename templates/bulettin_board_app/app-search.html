@@ -4,9 +4,9 @@
 {% block content %}
 
 <div class="card-columns">
-    <h1>{{ category.name }}</h1>
-    {% for announce in  annoucements %}
 
+
+    {% for announce in  annoucements %}
       <div class="card bg-light">
         {% for photo in announce.photos_set.all%}
             <img class="card-img-top" src="{{ photo.img.url }}" alt="Card image cap" height="300">
@@ -14,12 +14,14 @@
             <div class="card-body">
             <h5 class="card-title">{{ announce }}</h5>
             <p class="card-text">{{ announce.description }}</p>
-            <p class="card-text">{{ announce.locations }}</p>
+
+            <p class="card-text">{{  locations }}</p>
+
+
             <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-info">Szczegóły</button></a>
         </div>
       </div>
     {% endfor %}
 </div>
-
 
 {% endblock content %}

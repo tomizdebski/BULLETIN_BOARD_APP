@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
-
+<h1>{{ info }}</h1>
 <div class="card-columns">
+
 
     {% for announce in  annoucements %}
       <div class="card bg-light">
@@ -14,7 +15,7 @@
             <h5 class="card-title">{{ announce }}</h5>
             <p class="card-text">{{ announce.description }}</p>
 
-            <p class="card-text">{{ announce.locations_id }}</p>
+            <p class="card-text">{{  locations }}</p>
 
 
             <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-info">Szczegóły</button></a>

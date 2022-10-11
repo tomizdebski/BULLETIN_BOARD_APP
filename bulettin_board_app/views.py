@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.contrib.postgres.search import SearchVector
 from django.views.generic import CreateView
 
 from bulettin_board_app.forms import AnnoucementForm
@@ -16,12 +17,12 @@ class IndexView(View):
     def get(self, request):
         annoucements = Announcement.objects.all()
         photos = Photos.objects.filter(announcement__in=annoucements)
-
+        locations = Locations.objects.first()
 
         ctx = {
             "annoucements": annoucements,
             "photos": photos,
-
+            "locations": locations,
 
         }
 
@@ -96,12 +97,15 @@ class MyAnnounceView(View):
         user = request.user
         annoucements = Announcement.objects.filter(user_id=user.id)
         photos = Photos.objects.filter(announcement__in=annoucements)
-
+        if not annoucements:
+            info = "Nie masz jeszcze żadnych ogłoszeń"
+        else:
+            info = "Moje ogłoszenia"
         ctx = {
             "annoucements": annoucements,
-            "photos": photos
+            "photos": photos,
+            "info": info,
         }
-
         return render(request, "bulettin_board_app/index.html", ctx)
 
 
@@ -187,10 +191,28 @@ class ByCategoryView(View):
     def get(self, request, id_category):
         annoucements = Announcement.objects.filter(category_id=id_category)
         photos = Photos.objects.filter(announcement__in=annoucements)
+        category = Category.objects.get(id=id_category)
 
         ctx = {
             "annoucements": annoucements,
-            "photos": photos
+            "photos": photos,
+            "category": category,
         }
 
         return render(request, "bulettin_board_app/app-view-by-category.html", ctx)
+
+
+class SearchView(View):
+
+    def get(self):
+        ...
+
+    def post(self, request):
+        search_query = request.POST.get('search')
+        result = Announcement.objects.annotate(search=SearchVector('name', 'description'), ).filter(search=search_query)
+        photos = Photos.objects.filter(announcement__in=result)
+        ctx = {
+            "annoucements": result,
+            "photos": photos,
+        }
+        return render(request, "bulettin_board_app/app-search.html", ctx)

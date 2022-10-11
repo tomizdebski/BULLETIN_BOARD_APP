@@ -12,7 +12,8 @@ urlpatterns = [
     path('my-announce/', views.MyAnnounceView.as_view(), name="my_announce"),
     path('delete/<int:id>', views.DeleteView.as_view(), name="delete"),
     path('edit/<int:id>', views.EditView.as_view(), name="edit"),
-    path('send-email/<int:id>', views.SendEmailView.as_view(), name='send_email')
+    path('send-email/<int:id>', views.SendEmailView.as_view(), name='send_email'),
+    path('searching/', views.SearchView.as_view(), name='searching'),
 
 ]
 
