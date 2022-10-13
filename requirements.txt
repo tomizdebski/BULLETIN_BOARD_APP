@@ -205,3 +205,5 @@ wcwidth==0.1.9
 Werkzeug==2.1.2
 whitenoise==6.2.0
 zipp==3.1.0
+
+googlemaps~=4.6.0

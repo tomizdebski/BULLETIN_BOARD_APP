@@ -40,14 +40,16 @@ INSTALLED_APPS = [
     "bulettin_board_app",
     "bootstrap4",
     "users",
-    "django.contrib.sites",  # new
-    # 3rd party
-    "allauth", # new
-    "allauth.account", # new
-    "allauth.socialaccount", # new
+    "google",
+    "django.contrib.sites",
+    # allauth
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     # social providers
-    "allauth.socialaccount.providers.github", # new
-    "allauth.socialaccount.providers.twitter", # new
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.twitter",
+    # "allauth.socialaccount.providers.facebook'",
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -145,4 +147,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 LOGIN_URL = 'users:login'
 import django_heroku
 django_heroku.settings(locals())
+
+GOOGLE_API_KEY = 'AIzaSyCJwzJA1amAQBFzV650NmClGmjlP5K5b4M'
 

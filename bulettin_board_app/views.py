@@ -43,10 +43,18 @@ class AddAnnounceView(View):
         city = request.POST.get("city")
         street = request.POST.get("street")
         province = request.POST.get("province")
+        zipcode = request.POST.get("zipcode")
+        country = request.POST.get("country")
 
-        if len(request.FILES) != 0 and name and description and user and category and city and street and province:
+        if len(request.FILES) != 0 and name and description and user and category and city and street\
+                and province and zipcode and country:
             image = request.FILES['image1']
-            locations = Locations.objects.create(city=city, street=street, province=province)
+            locations = Locations.objects.create(city=city,
+                                                 street=street,
+                                                 province=province,
+                                                 zipcode=zipcode,
+                                                 country=country)
+
             annoucement = Announcement.objects.create(name=name,
                                                       description=description,
                                                       category_id=category,
@@ -55,7 +63,11 @@ class AddAnnounceView(View):
                                                       )
             Photos.objects.create(img=image, announcement_id=annoucement.id)
         else:
-            locations = Locations.objects.create(city=city, street=street, province=province)
+            locations = Locations.objects.create(city=city,
+                                                 street=street,
+                                                 province=province,
+                                                 zipcode=zipcode,
+                                                 country=country)
             Announcement.objects.create(name=name,
                                         description=description,
                                         category_id=category,
@@ -154,6 +166,8 @@ class EditView(View):
         locations.city = request.POST.get("city")
         locations.street = request.POST.get("street")
         locations.province = request.POST.get("province")
+        locations.zipcode = request.POST.get("zipcode")
+        locations.country = request.POST.get("country")
 
         if len(request.FILES) != 0:
             photos.img = request.FILES['image1']

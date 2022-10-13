@@ -16,11 +16,15 @@ class Category(models.Model):
 
 
 class Locations(models.Model):
-    name = models.CharField(max_length=255, default="")
-    description = models.TextField(default="")
-    city = models.CharField(max_length=100)
-    street = models.CharField(max_length=100)
-    province = models.CharField(max_length=100)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(max_length=200, blank=True, null=True)
+    city = models.CharField(max_length=200, blank=True, null=True)
+    zipcode = models.CharField(max_length=200, blank=True, null=True)
+    street = models.CharField(max_length=200, blank=True, null=True)
+    province = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    latitude = models.CharField(max_length=200, blank=True, null=True)
+    longitude = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse("update_locations", args=(self.id,))
