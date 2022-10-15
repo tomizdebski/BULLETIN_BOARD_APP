@@ -81,7 +81,7 @@ def calculate_distance(request, pk, pk2):
     return render(request, 'google/distance.html', context)
 
 
-def map(request):
+def map(request, id):
     key = settings.GOOGLE_API_KEY
     context = {
         'key': key,
@@ -90,9 +90,8 @@ def map(request):
     return render(request, 'google/map.html', context)
 
 
-def mydata(request):
-
-    result_list = list(Locations.objects \
+def mydata(request, id):
+    result_list = list(Locations.objects.filter(id=id) \
                        .exclude(latitude__isnull=True) \
                        .exclude(longitude__isnull=True) \
                        .exclude(latitude__exact='') \

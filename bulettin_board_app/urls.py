@@ -15,6 +15,7 @@ urlpatterns = [
     path('send-email/<int:id>', views.SendEmailView.as_view(), name='send_email'),
     path('searching/', views.SearchView.as_view(), name='searching'),
 
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

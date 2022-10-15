@@ -8,7 +8,7 @@ urlpatterns = [
     path('geocode/locations/<int:pk>', view.geocode_locations, name="geocode_club"),
 
     path('distance', view.distance, name="distance"),
-    path('map/', view.map, name="map"),
-    path('mydata/', view.mydata, name="mydata"),
+    path('map/<int:id>', view.map, name="map"),
+    path('mydata/<int:id>', view.mydata, name="mydata"),
     path('calculate/distance/<int:pk>/<int:pk2>', view.calculate_distance, name="calculate_distance"),
 ]

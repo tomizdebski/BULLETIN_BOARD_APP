@@ -17,11 +17,14 @@
     <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="800">
     {% endif %}
 
-  <p class="lead">
-      <a class="btn btn-warning btn-lg" href="{% url 'edit' annoucement.id %}" role="button">Edytuj</a>
-      <a class="btn btn-danger btn-lg" href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a>
-      <a class="btn btn-success btn-lg" href="{% url 'send_email' annoucement.id %}" role="button">Napisz wiadomość</a>
-  </p>
+        <div class="title"><i class="fas fa-compass mr-2"></i>Lokalizacja ogłoszenia </div>
+
+  <div class="btn-group-justified">
+      <btn class="col"><a class="btn btn-warning btn-lg " href="{% url 'edit' annoucement.id %}" role="button">Edytuj</a></btn>
+      <btn class="col"><a class="btn btn-danger btn-lg " href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a></btn>
+      <btn class="col"><a class="btn btn-success btn-lg " href="{% url 'send_email' annoucement.id %}" role="button">Napisz wiadomość</a></btn>
+      <btn class="col"><a class="btn btn-primary btn-lg " href="{% url 'map' annoucement.locations.id %}"><i class="fas fa-compass mr-2" ></i>Lokalizacja ogłoszenia</a></btn>
+  </div>
 
 </div>
 
