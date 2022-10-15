@@ -12,13 +12,11 @@
     <p>Miasto: {{ locations.city }}</p>
     <p>Ulica: {{ locations.street }}</p>
     <p>Województwo: {{ locations.province }}</p>
-
+    <hr>
     {% if photos %}
     <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="800">
     {% endif %}
-
-        <div class="title"><i class="fas fa-compass mr-2"></i>Lokalizacja ogłoszenia </div>
-
+    <hr>
   <div class="btn-group-justified">
       <btn class="col"><a class="btn btn-warning btn-lg " href="{% url 'edit' annoucement.id %}" role="button">Edytuj</a></btn>
       <btn class="col"><a class="btn btn-danger btn-lg " href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a></btn>

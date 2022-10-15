@@ -42,50 +42,52 @@ class AddAnnounceView(View):
         province = request.POST.get("province")
         zipcode = request.POST.get("zipcode")
         country = request.POST.get("country")
+        if name and description and category and city and street and province and zipcode and country:
 
-        if len(request.FILES) != 0 and name and description and user and category and city and street \
-                and province and zipcode and country:
-            image = request.FILES['image1']
-            # google-maps- geocode - longtitude and latitude
-            adress_string = str(street) + ", " + str(zipcode) + ", " + str(city) + ", " \
-                            + str(country) + ", " + str(province)
-            gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
-            intermediate = json.dumps(gmaps.geocode(str(adress_string)))
-            intermediate2 = json.loads(intermediate)
-            latitude = intermediate2[0]['geometry']['location']['lat']
-            longitude = intermediate2[0]['geometry']['location']['lng']
+            if len(request.FILES) != 0:
+                image = request.FILES['image1']
+                # google-maps- geocode - longtitude and latitude
+                adress_string = str(street) + ", " + str(zipcode) + ", " + str(city) + ", " \
+                                + str(country) + ", " + str(province)
+                gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
+                intermediate = json.dumps(gmaps.geocode(str(adress_string)))
+                intermediate2 = json.loads(intermediate)
+                latitude = intermediate2[0]['geometry']['location']['lat']
+                longitude = intermediate2[0]['geometry']['location']['lng']
 
-            locations = Locations.objects.create(city=city,
-                                                 street=street,
-                                                 province=province,
-                                                 zipcode=zipcode,
-                                                 country=country,
-                                                 latitude=latitude,
-                                                 longitude=longitude,
-                                                 )
+                locations = Locations.objects.create(city=city,
+                                                     street=street,
+                                                     province=province,
+                                                     zipcode=zipcode,
+                                                     country=country,
+                                                     latitude=latitude,
+                                                     longitude=longitude,
+                                                     )
 
-            annoucement = Announcement.objects.create(name=name,
-                                                      description=description,
-                                                      category_id=category,
-                                                      locations_id=locations.id,
-                                                      user_id=user.id,
-                                                      )
-            Photos.objects.create(img=image, announcement_id=annoucement.id)
-            return redirect('index')
+                annoucement = Announcement.objects.create(name=name,
+                                                          description=description,
+                                                          category_id=category,
+                                                          locations_id=locations.id,
+                                                          user_id=user.id,
+                                                          )
+                Photos.objects.create(img=image, announcement_id=annoucement.id)
+                return redirect('index')
+            else:
+                locations = Locations.objects.create(city=city,
+                                                     street=street,
+                                                     province=province,
+                                                     zipcode=zipcode,
+                                                     country=country)
+                Announcement.objects.create(name=name,
+                                            description=description,
+                                            category_id=category,
+                                            locations_id=locations.id,
+                                            user_id=user.id,
+                                            )
+
+                return redirect('index')
         else:
-            locations = Locations.objects.create(city=city,
-                                                 street=street,
-                                                 province=province,
-                                                 zipcode=zipcode,
-                                                 country=country)
-            Announcement.objects.create(name=name,
-                                        description=description,
-                                        category_id=category,
-                                        locations_id=locations.id,
-                                        user_id=user.id,
-                                        )
-
-            return redirect('index')
+            return render(request, 'bulettin_board_app/app-add-annouce.html', {'error': 'Wypełnij poprawnie formularz'})
 
 
 class DetaliAnnounceIdView(View):
