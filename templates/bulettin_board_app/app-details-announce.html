@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{% endblock title %}
 {% block content %}
+    <div class="shadow-lg p-3 mb-5 bg-body rounded " ><h4>Szczegóły ogłoszenia</h4></div>
 <div class="jumbotron">
-  <h1 class="display-4">Szczegóły ogłoszenia</h1>
-  <p class="lead">{{ annoucement }}</p>
+  <h1 class="display-4">{{ annoucement }}</h1>
+
   <hr class="my-4">
     <h4>Opis:</h4>
   <p>{{ annoucement.description }}</p>
@@ -17,12 +18,13 @@
     <img class="card-img-top" src="{{ photos.img.url }}" alt="Card image cap" height="800">
     {% endif %}
     <hr>
-  <div class="btn-group-justified">
-      <btn class="col"><a class="btn btn-warning btn-lg " href="{% url 'edit' annoucement.id %}" role="button">Edytuj</a></btn>
-      <btn class="col"><a class="btn btn-danger btn-lg " href="{% url 'delete' annoucement.id %}" role="button">Kasuj</a></btn>
-      <btn class="col"><a class="btn btn-success btn-lg " href="{% url 'send_email' annoucement.id %}" role="button">Napisz wiadomość</a></btn>
-      <btn class="col"><a class="btn btn-primary btn-lg " href="{% url 'map' annoucement.locations.id %}"><i class="fas fa-compass mr-2" ></i>Lokalizacja ogłoszenia</a></btn>
-  </div>
+
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <a href="{% url 'send_email' annoucement.id %}"><button type="button" class="btn btn-success"><i class="fas fa-envelope mr-2"></i>Napisz wiadomość</button></a>
+  <a href="{% url 'map' annoucement.locations.id %}"><button type="button" class="btn btn-primary"><i class="fas fa-compass mr-2" ></i>Lokalizacja ogłoszenia</button></a>
+
+</div>
 
 </div>
 

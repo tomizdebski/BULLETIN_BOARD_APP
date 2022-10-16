@@ -35,14 +35,15 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
 
-    <a class="navbar-brand" href="{% url "index" %}">
-        <b>The Bulettin Board</b>
-    </a>
+
+    <a href="{% url 'index' %}"><button type="button" class="btn btn-light"><h5><i class="fas fa-calendar mr-2" ></i><b>The Bulettin Board</b></h5></button></a>
+
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+   
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -65,34 +66,39 @@
             <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'searching' %}">
                 {% csrf_token %}
                         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">SZUKAJ</button>
+                        <button class="btn btn-light" type="submit"><i class="fas fa-search mr-2" ></i>Szukaj</button>
             </form>
             </li>
 
         </ul>
         <ul class="navbar-nav ml-auto">
-            <a href="{% url 'my_announce' %}">
-                        <button class="btn btn-primary" type="submit">MOJE</button>
-            </a>
 
-             <a href="{% url 'add_announce' %}">
-                        <button class="btn btn-warning" type="submit">DODAJ</button>
-             </a>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <a href="{% url 'my_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-home mr-2"></i>Moje</button></a>
+          <a href="{% url 'add_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-plus-circle mr-2" ></i>Dodaj</button></a>
+
+        </div>
+
+
+
+
             {% if user.is_authenticated %}
 
                 <li class="nav-item">
                     <span class="navbar-text">Witaj, {{ user.username }}.</span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:logout' %}">Wyloguj</a>
+
+{#                    <a class="nav-link" href="{% url 'users:logout' %}">Wyloguj</a>#}
+                    <a href="{% url 'users:logout' %}"><button type="button" class="btn btn-light"><i class="fas fa-arrow-right mr-2" ></i>Wyloguj</button></a>
                 </li>
             {% else %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:register' %}">Rejestruj </a>
+                    <a class="nav-link" href="{% url 'users:register' %}"><button type="button" class="btn btn-light"><i class="fas fa-plus-circle mr-2" ></i>Rejestruj</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Zaloguj </a>
+                    <a class="nav-link" href="{% url 'users:login' %}"><button type="button" class="btn btn-light"><i class="fas fa-arrow-left mr-2" ></i>Zaloguj</button></a>
                 </li>
 
             {% endif %}
@@ -104,6 +110,8 @@
     <div class="pb-2 mb-2 border-bottom">
         {% block page_header %} {% endblock page_header %}
     </div>
+
+
     <div class="card bg-dark text-white">
             <img class="card-img" src="{% static "logo.jpg" %}" alt="Card image" height="300">
 {#        <div class="card-img-overlay">#}
@@ -130,10 +138,10 @@
 
     <!-- Right -->
     <div>
-      <a href="" class="me-4 text-reset">
+      <a href="https://www.facebook.com/" class="me-4 text-reset">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://twitter.com/froddoti" class="me-4 text-reset">
         <i class="fab fa-twitter"></i>
       </a>
       <a href="" class="me-4 text-reset">
@@ -145,7 +153,7 @@
       <a href="" class="me-4 text-reset">
         <i class="fab fa-linkedin"></i>
       </a>
-      <a href="" class="me-4 text-reset">
+      <a href="https://github.com/tomizdebski/bulletin_board" class="me-4 text-reset">
         <i class="fab fa-github"></i>
       </a>
     </div>

@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1>{{ info }}</h1>
-    <div class="shadow-lg p-3 mb-5 bg-body rounded"><h4>Wszystkie ogłoszenia: </h4></div>
+<div class="shadow-lg p-3 mb-5 bg-body rounded " ><h4><b>{{ info }}</b></h4></div>
 <div class="card-columns">
 
 
@@ -18,10 +17,18 @@
 
             <p class="card-text">{{ announce.locations.city }}</p>
 
+            <div class="btn-group " role="group" aria-label="Basic mixed styles example" >
+                        <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-primary">Szczegóły</button></a>
+                        <a href="{% url 'edit' announce.id %}"><button type="button" class="btn btn-warning">Edytuj</button></a>
+                        <a href="{% url 'delete' announce.id %}"><button type="button" class="btn btn-danger">Kasuj</button></a>
 
-            <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-info">Szczegóły</button></a>
+            </div>
+
+
         </div>
+
       </div>
+
     {% endfor %}
 </div>
 

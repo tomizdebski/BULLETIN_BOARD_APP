@@ -1,6 +1,7 @@
 
 import json
 import googlemaps
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.postgres.search import SearchVector
@@ -26,7 +27,7 @@ class IndexView(View):
         return render(request, "bulettin_board_app/index.html", ctx)
 
 
-class AddAnnounceView(View):
+class AddAnnounceView(LoginRequiredMixin, View):
 
     def get(self, request):
 
@@ -115,7 +116,7 @@ class DetaliAnnounceIdView(View):
             return render(request, self.template_name, ctx)
 
 
-class MyAnnounceView(View):
+class MyAnnounceView(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
@@ -130,21 +131,27 @@ class MyAnnounceView(View):
             "photos": photos,
             "info": info,
         }
-        return render(request, "bulettin_board_app/index.html", ctx)
+        return render(request, "bulettin_board_app/app-my-announce.html", ctx)
 
 
-class DeleteView(View):
+class DeleteView(LoginRequiredMixin, View):
 
     def get(self, request, id):
+        annoucement = Announcement.objects.get(id=id)
+        return render(request, "bulettin_board_app/app-delete-modal.html", {'annoucement': annoucement})
+
+    def post(self, request, id):
         annoucement = Announcement.objects.get(id=id)
         annoucement.delete()
         return redirect("my_announce")
 
 
-class EditView(View):
+
+class EditView(LoginRequiredMixin, View):
     template_name = "bulettin_board_app/app-edit-announce.html"
 
     def get(self, request, id):
+        user = request.user
         annoucement = Announcement.objects.get(id=id)
         locations = Locations.objects.get(id=annoucement.locations_id)
         category = Category.objects.get(id=annoucement.category_id)
@@ -154,14 +161,16 @@ class EditView(View):
                 "annoucement": annoucement,
                 "locations": locations,
                 "photos": photos,
-                "category": category
+                "category": category,
+                "user": user,
             }
             return render(request, self.template_name, ctx)
         except Photos.DoesNotExist:
             ctx = {
                 "annoucement": annoucement,
                 "locations": locations,
-                "category": category
+                "category": category,
+                "user": user,
             }
             return render(request, self.template_name, ctx)
 
@@ -195,7 +204,7 @@ class EditView(View):
         return redirect('details_announce', id=id)
 
 
-class SendEmailView(View):
+class SendEmailView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         annoucement = Announcement.objects.get(id=id)
@@ -238,6 +247,7 @@ class SearchView(View):
         result = Announcement.objects.annotate(search=SearchVector('name', 'description'), ).filter(search=search_query)
         photos = Photos.objects.filter(announcement__in=result)
         ctx = {
+            "search": search_query,
             "annoucements": result,
             "photos": photos,
         }

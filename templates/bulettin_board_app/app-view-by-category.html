@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block content %}
-
+<div class="shadow-lg p-3 mb-5 bg-body rounded"><h4>{{ category.name }}</h4></div>
 <div class="card-columns">
-    <h1>{{ category.name }}</h1>
+
+
     {% for announce in  annoucements %}
 
       <div class="card bg-light">
