@@ -239,8 +239,8 @@ class ByCategoryView(View):
 
 class SearchView(View):
 
-    def get(self):
-        ...
+    def get(self, request):
+        return render(request, "bulettin_board_app/app-search.html")
 
     def post(self, request):
         search_query = request.POST.get('search')

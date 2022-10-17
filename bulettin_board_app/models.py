@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(default="")
+    name = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(max_length=200, blank=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse("update_category", args=(self.id,))
+    # def get_absolute_url(self):
+    #     return reverse("update_category", args=(self.id,))
 
     def __str__(self):
         return f"{self.name} "
@@ -27,15 +27,15 @@ class Locations(models.Model):
     longitude = models.CharField(max_length=200, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse("update_locations", args=(self.id,))
+        return reverse("map", args=(self.id,))
 
     def __str__(self):
         return f"{self.name} "
 
 
 class Announcement(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField(default="")
+    name = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(max_length=200, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -43,7 +43,7 @@ class Announcement(models.Model):
     locations = models.ForeignKey(Locations, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
-        return reverse("add_announce", args=(self.id,))
+        return reverse("details-announce", args=(self.id,))
 
     def __str__(self):
         return f"{self.name} "
@@ -70,6 +70,6 @@ class Preferences(models.Model):
 
 
 class Photos(models.Model):
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=200, blank=True, null=True)
     img = models.ImageField(upload_to="images/")
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
