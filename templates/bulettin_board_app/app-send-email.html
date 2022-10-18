@@ -2,12 +2,14 @@
 {% block title %}{% endblock title %}
 {% block content %}
 
+    <div class="shadow-lg p-3 mb-5 bg-body rounded"><h4>Napisz wiadomość do ogłoszenia : {{ annoucement }}</h4></div>
+
 
 <form method="post" action="" id="contact_form">
     {% csrf_token %}
      <div class="form-group">
          <h3></h3>
-    <label for="exampleFormControlInput1"><b>Napisz wiadomość do ogłoszenia : {{ annoucement }}</b></label>
+
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="podaj maila do kontaktu w formacie name@example.com" name="email">
   </div>
   <div class="form-group">

@@ -43,6 +43,7 @@ class AddAnnounceView(LoginRequiredMixin, View):
         province = request.POST.get("province")
         zipcode = request.POST.get("zipcode")
         country = request.POST.get("country")
+
         if name and description and category and city and street and province and zipcode and country:
 
             if len(request.FILES) != 0:
