@@ -23,7 +23,7 @@ def locations():
                                     street='stuletnia 12',
                                     province='mazowieckie',
                                     zipcode='03-035',
-                                    country='Polska')
+                                    country='Polska',)
 
 
 @pytest.fixture
@@ -36,16 +36,18 @@ def category():
 
 
 @pytest.fixture
-def announce():
+def announce(category, locations, user):
     """
     Create fixture announce
     :return: queryset announce
     """
-    return Announcement.objects.create(name='Test',
+    return Announcement.objects.create(
+                                       name='Test',
                                        description='Test-desc',
                                        category_id=category.id,
                                        locations_id=locations.id,
-                                       user_id=user.id, )
+                                       user_id=user.id
+                                        )
 
 
 

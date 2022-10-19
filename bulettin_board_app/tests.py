@@ -19,6 +19,13 @@ def test_index_view(client):
 
 
 @pytest.mark.django_db
+def test_by_category_view(client, category):
+    url = reverse('by_category_view', args=(category.id,))
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 def test_get_add_announce_view(client):
     """
     Test get add announce
@@ -61,6 +68,19 @@ def test_post_add_announce_view(client, user, category, locations):
 
 
 @pytest.mark.django_db
+def test_detail_announce_id_view(client, announce):
+    """
+
+    :param client:
+    :param announce:
+    :return:
+    """
+    url = reverse('details_announce', args=(announce.id,))
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
 def test_my_announce_get_not_login(client):
     """
     Test get my announce not login
@@ -85,6 +105,40 @@ def test_my_announce_get_login(client, user):
     client.force_login(user)
     response = client.get(url)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_send_email_get_not_login(client, announce):
+    """
+
+    :param client:
+    :param announce:
+    :return:
+    """
+    url = reverse('send_email', args=(announce.id,))
+    response = client.get(url)
+    assert response.status_code == 302
+    url_redirect = reverse('users:login')
+    assert response.url.startswith(url_redirect)
+
+
+@pytest.mark.django_db
+def test_send_email_get_login(client, announce, user):
+    """
+
+    :param client:
+    :param announce:
+    :return:
+    """
+    url = reverse('send_email', args=(announce.id,))
+    client.force_login(user)
+    response = client.get(url)
+    assert response.status_code == 200
+
+
+
+
+
 
 
 # @pytest.mark.django_db

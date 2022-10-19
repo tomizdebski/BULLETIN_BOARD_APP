@@ -92,7 +92,7 @@ class AddAnnounceView(LoginRequiredMixin, View):
             return render(request, 'bulettin_board_app/app-add-annouce.html', {'error': 'Wypełnij poprawnie formularz'})
 
 
-class DetaliAnnounceIdView(View):
+class DetailAnnounceIdView(View):
     template_name = "bulettin_board_app/app-details-announce.html"
 
     def get(self, request, id):
