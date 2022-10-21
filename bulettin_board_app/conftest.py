@@ -29,7 +29,7 @@ def locations():
 @pytest.fixture
 def category():
     """
-
+    Create fixture category
     :return:
     """
     return Category.objects.create(name='Test')
@@ -42,12 +42,26 @@ def announce(category, locations, user):
     :return: queryset announce
     """
     return Announcement.objects.create(
-                                       name='Test',
-                                       description='Test-desc',
-                                       category_id=category.id,
-                                       locations_id=locations.id,
-                                       user_id=user.id
-                                        )
+        name='Test',
+        description='Test-desc',
+        category_id=category.id,
+        locations_id=locations.id,
+        user_id=user.id
+        )
+
+
+@pytest.fixture
+def photo(announce):
+    """
+    Create fixture photo
+    :param announce:
+    :return:
+    """
+    return Photos.objects.create(
+        name='Test',
+        img='images/test.jpg',
+        announcement_id=announce.id
+    )
 
 
 

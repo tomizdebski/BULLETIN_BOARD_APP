@@ -164,6 +164,7 @@ class EditView(LoginRequiredMixin, View):
                 "photos": photos,
                 "category": category,
                 "user": user,
+                "info": "Edycja ogłoszenia:"
             }
             return render(request, self.template_name, ctx)
         except Photos.DoesNotExist:
@@ -228,11 +229,13 @@ class ByCategoryView(View):
         annoucements = Announcement.objects.filter(category_id=id_category)
         photos = Photos.objects.filter(announcement__in=annoucements)
         category = Category.objects.get(id=id_category)
+        locations = Locations.objects.all()
 
         ctx = {
             "annoucements": annoucements,
             "photos": photos,
             "category": category,
+            "locations": locations,
         }
 
         return render(request, "bulettin_board_app/app-view-by-category.html", ctx)

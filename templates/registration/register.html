@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 
 {% block content %}
 
     <form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">Rejestruj</button>
+    {% bootstrap_form form %}
+    <button name="submit" class="btn btn-primary">Rejestruj</button>
         <input type="hidden" name="next" value="{% url 'index' %}" />
     </form>
 
