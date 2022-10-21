@@ -18,9 +18,9 @@
             <p class="card-text">{{ announce.locations.city }}</p>
 
             <div class="btn-group " role="group" aria-label="Basic mixed styles example" >
-                        <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-primary">Szczegóły</button></a>
-                        <a href="{% url 'edit' announce.id %}"><button type="button" class="btn btn-warning">Edytuj</button></a>
-                        <a href="{% url 'delete' announce.id %}"><button type="button" class="btn btn-danger">Kasuj</button></a>
+                        <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-outline-primary">Szczegóły</button></a>
+                        <a href="{% url 'edit' announce.id %}"><button type="button" class="btn btn-outline-warning">Edytuj</button></a>
+                        <a href="{% url 'delete' announce.id %}"><button type="button" class="btn btn-outline-danger">Kasuj</button></a>
 
             </div>
 

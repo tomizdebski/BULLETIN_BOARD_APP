@@ -73,3 +73,8 @@ class Photos(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
     img = models.ImageField(upload_to="images/")
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
+
+
+class Watching(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)

@@ -1,4 +1,3 @@
-
 import json
 import googlemaps
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,13 +5,18 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.postgres.search import SearchVector
 from BulettinBoard import settings
-from bulettin_board_app.models import Announcement, Photos, Category, Locations
+from bulettin_board_app.models import Announcement, Photos, Category, Locations, Watching
 from django.core.mail import send_mail
 
 
 class IndexView(View):
 
     def get(self, request):
+        """
+        The function displays the home page
+        :param request:
+        :return: render page index.html
+        """
         annoucements = Announcement.objects.all()
         photos = Photos.objects.filter(announcement__in=annoucements)
         locations = Locations.objects.all()
@@ -30,10 +34,19 @@ class IndexView(View):
 class AddAnnounceView(LoginRequiredMixin, View):
 
     def get(self, request):
-
+        """
+        The function displays page app-add-annouce.html
+        :param request:
+        :return: render app-add-annouce.html
+        """
         return render(request, "bulettin_board_app/app-add-annouce.html")
 
     def post(self, request):
+        """
+        The function add annouce using the post method
+        :param request:
+        :return: if correct, it redirects to index.html if not it redirect app-add-annouce.html
+        """
         name = request.POST.get("name")
         description = request.POST.get('description')
         user = request.user
@@ -96,6 +109,12 @@ class DetailAnnounceIdView(View):
     template_name = "bulettin_board_app/app-details-announce.html"
 
     def get(self, request, id):
+        """
+        The functions displays an announce with the given id
+        :param request:
+        :param id:
+        :return: render app-details-announce.html
+        """
         annoucement = Announcement.objects.get(id=id)
         locations = Locations.objects.get(id=annoucement.locations_id)
         category = Category.objects.get(id=annoucement.category_id)
@@ -120,6 +139,11 @@ class DetailAnnounceIdView(View):
 class MyAnnounceView(LoginRequiredMixin, View):
 
     def get(self, request):
+        """
+        The functions displays an my announce
+        :param request:
+        :return: render app-my-announce.html
+        """
         user = request.user
         annoucements = Announcement.objects.filter(user_id=user.id)
         photos = Photos.objects.filter(announcement__in=annoucements)
@@ -138,20 +162,37 @@ class MyAnnounceView(LoginRequiredMixin, View):
 class DeleteView(LoginRequiredMixin, View):
 
     def get(self, request, id):
+        """
+        The functions delete announce with the given id
+        :param request:
+        :param id:
+        :return: render app-delete-modal.html
+        """
         annoucement = Announcement.objects.get(id=id)
         return render(request, "bulettin_board_app/app-delete-modal.html", {'annoucement': annoucement})
 
     def post(self, request, id):
+        """
+        The functions delete announce with the given id
+        :param request:
+        :param id:
+        :return: redirect to my_announce
+        """
         annoucement = Announcement.objects.get(id=id)
         annoucement.delete()
         return redirect("my_announce")
-
 
 
 class EditView(LoginRequiredMixin, View):
     template_name = "bulettin_board_app/app-edit-announce.html"
 
     def get(self, request, id):
+        """
+        The function displays announce to edit
+        :param request:
+        :param id:
+        :return: render app-edit-announce.html
+        """
         user = request.user
         annoucement = Announcement.objects.get(id=id)
         locations = Locations.objects.get(id=annoucement.locations_id)
@@ -177,7 +218,12 @@ class EditView(LoginRequiredMixin, View):
             return render(request, self.template_name, ctx)
 
     def post(self, request, id):
-
+        """
+        The function edit annouce
+        :param request:
+        :param id:
+        :return: redirect detail_announce
+        """
         annoucement = Announcement.objects.get(id=id)
         locations = Locations.objects.get(id=annoucement.locations_id)
         photos = Photos.objects.get(announcement_id=id)
@@ -209,10 +255,22 @@ class EditView(LoginRequiredMixin, View):
 class SendEmailView(LoginRequiredMixin, View):
 
     def get(self, request, id):
+        """
+
+        :param request:
+        :param id:
+        :return:
+        """
         annoucement = Announcement.objects.get(id=id)
         return render(request, 'bulettin_board_app/app-send-email.html', {'annoucement': annoucement})
 
     def post(self, request, id):
+        """
+        The function send email to the owner of the annouceme
+        :param request:
+        :param id:
+        :return: redirect detalis_annouce
+        """
         annoucement = Announcement.objects.get(id=id)
         email_sender = request.POST.get("email")
         topic = request.POST.get("topic")
@@ -226,6 +284,12 @@ class SendEmailView(LoginRequiredMixin, View):
 class ByCategoryView(View):
 
     def get(self, request, id_category):
+        """
+        The function display annoucements by category
+        :param request:
+        :param id_category:
+        :return: render app-view-by-category.html
+        """
         annoucements = Announcement.objects.filter(category_id=id_category)
         photos = Photos.objects.filter(announcement__in=annoucements)
         category = Category.objects.get(id=id_category)
@@ -247,6 +311,11 @@ class SearchView(View):
         return render(request, "bulettin_board_app/app-search.html")
 
     def post(self, request):
+        """
+        The function searches in names and descriptions
+        :param request:
+        :return: render app-search.html
+        """
         search_query = request.POST.get('search')
         result = Announcement.objects.annotate(search=SearchVector('name', 'description'), ).filter(search=search_query)
         photos = Photos.objects.filter(announcement__in=result)
@@ -256,4 +325,62 @@ class SearchView(View):
             "photos": photos,
         }
         return render(request, "bulettin_board_app/app-search.html", ctx)
+
+
+class WatchingAnnounceView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        """
+        The functions displays an watching announce
+        :param request:
+        :return: render app-watching-announce.html
+        """
+        user = request.user
+        watching = Watching.objects.filter(user_id=user.id)
+        annoucements = Announcement.objects.filter(watching__in=watching)
+        photos = Photos.objects.filter(announcement__in=annoucements)
+        if not annoucements:
+            info = "Nie obserwujesz jeszcze żadnych ogłoszeń"
+        else:
+            info = "Obserwowane"
+        ctx = {
+            "annoucements": annoucements,
+            "photos": photos,
+            "info": info,
+        }
+        return render(request, "bulettin_board_app/app-watching-announce.html", ctx)
+
+
+class AddToWatchingView(LoginRequiredMixin, View):
+
+    def get(self, request, id):
+        """
+        The functions add to watching announce
+        :param request:
+        :param id:
+        :return: render app-watching-announce.html
+        """
+        user = request.user
+        Watching.objects.create(
+            user_id=user.id,
+            announcement_id=id
+        )
+
+        return render(request, "bulettin_board_app/app-watching-announce.html")
+
+
+class DeleteWatchingView(LoginRequiredMixin, View):
+
+    def get(self, request, id):
+        """
+        The functions delete watching announce
+        :param request:
+        :param id:
+        :return: render app-watching-announce.html
+        """
+        watching = Watching.objects.get(announcement_id=id)
+        watching.delete()
+
+        return redirect("watching")
+
 

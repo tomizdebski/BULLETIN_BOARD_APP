@@ -16,7 +16,8 @@
             <h5 class="card-title">{{ announce }}</h5>
             <p class="card-text">{{ announce.description }}</p>
             <p class="card-text">{{ announce.locations.city }}</p>
-            <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-info">Szczegóły</button></a>
+                <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-outline-info">Szczegóły</button></a>
+                <a href="{% url 'add_to_watching' announce.id %}"><button type="button" class="btn btn-outline-warning"><i class="fas fa-star mr-2"></i>Obserwuj</button></a>
         </div>
       </div>
     {% endfor %}

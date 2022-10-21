@@ -25,7 +25,6 @@
 
     <script type="text/javascript" src="//kit.fontawesome.com/b68b3cc9f2.js?ver=5.2.4"></script>
     <script src="https://kit.fontawesome.com/f44bd2967c.js" crossorigin="anonymous"></script>
-
     <title>The Bulettin Board</title>
 
     {% bootstrap_css %}
@@ -33,10 +32,13 @@
 </head>
 <body>
 
+
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
 
 
-    <a href="{% url 'index' %}"><button type="button" class="btn btn-light"><h5><i class="fas fa-calendar mr-2" ></i><b>The Bulettin Board</b></h5></button></a>
+
+
+    <a class="navbar-brand" href="{% url 'index' %}"><b>The Bulettin Board</b></a>
 
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -63,19 +65,20 @@
                 <a class="nav-link" href="{% url "by_category_view" "5"%}">Praca</a>
             </li>
             <li>
-            <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'searching' %}">
-                {% csrf_token %}
-                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-light" type="submit"><i class="fas fa-search mr-2" ></i>Szukaj</button>
-            </form>
+                <form class="d-flex" role="search" method="post" action="{% url 'searching' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search mr-2" ></i>Szukaj</button>
+                </form>
             </li>
 
         </ul>
         <ul class="navbar-nav ml-auto">
 
         <li class="nav-item">
-          <a href="{% url 'my_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-home mr-2"></i>Moje</button></a>
-          <a href="{% url 'add_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-plus-circle mr-2" ></i>Dodaj</button></a>
+            <a href="{% url 'watching' %}"><button type="button" class="btn btn-light"><i class="fas fa-star mr-2"></i>Obserwowane</button></a>
+            <a href="{% url 'my_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-home mr-2"></i>Moje</button></a>
+            <a href="{% url 'add_announce' %}"><button type="button" class="btn btn-light"><i class="fas fa-plus-circle mr-2" ></i>Dodaj</button></a>
         </li>
 
 
@@ -114,6 +117,7 @@
 
     <div class="card bg-dark text-white">
             <img class="card-img" src="{% static "logo.jpg" %}" alt="Card image" height="300">
+
 {#        <div class="card-img-overlay">#}
 {#            <h5 class="card-title">Card title</h5>#}
 {#            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>#}

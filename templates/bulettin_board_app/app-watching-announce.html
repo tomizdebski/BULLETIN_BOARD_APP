@@ -2,8 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1>{{ info }}</h1>
-    <div class="shadow-lg p-3 mb-5 bg-body rounded"><h4>Wszystkie ogłoszenia: </h4></div>
+<div class="shadow-lg p-3 mb-5 bg-body rounded " ><h4><b>{{ info }}</b></h4></div>
 <div class="card-columns">
 
 
@@ -17,12 +16,13 @@
             <p class="card-text">{{ announce.description }}</p>
 
             <p class="card-text">{{ announce.locations.city }}</p>
-                <a href="{% url 'details_announce' announce.id %}"><button type="button" class="btn btn-outline-info">Szczegóły</button></a>
 
-                <a href="{% url 'add_to_watching' announce.id %}"><button type="button" class="btn btn-outline-warning"><i class="fas fa-star mr-2"></i>Obserwuj</button></a>
+                        <a href="{% url 'delete_watching' announce.id %}"><button type="button" class="btn btn-outline-danger"><i class="fas fa-stop mr-2" ></i>Nie obserwuj</button></a>
 
-            </div>
+        </div>
+
       </div>
+
     {% endfor %}
 </div>
 

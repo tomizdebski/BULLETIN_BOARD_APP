@@ -14,6 +14,9 @@ urlpatterns = [
     path('edit/<int:id>', views.EditView.as_view(), name="edit"),
     path('send-email/<int:id>', views.SendEmailView.as_view(), name='send_email'),
     path('searching/', views.SearchView.as_view(), name='searching'),
+    path('watching/', views.WatchingAnnounceView.as_view(), name='watching'),
+    path('add-to-watching/<int:id>', views.AddToWatchingView.as_view(), name='add_to_watching'),
+    path('delete-watching/<int:id>', views.DeleteWatchingView.as_view(), name='delete_watching'),
 
 
 ]
