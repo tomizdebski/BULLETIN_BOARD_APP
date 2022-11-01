@@ -4,3 +4,6 @@ THEBULETINBOARD.pl for free ads in the following categories: Electronics, Automo
 Offers can be found quickly, and it is easy to submit an advertisement. 
 If you want to sell something - you can easily add free ads. 
 You can buy something - interesting bargains here, cheaper than in the store.
+
+
+![](static/widok_aplikacji.png)

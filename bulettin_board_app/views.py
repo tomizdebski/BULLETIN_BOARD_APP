@@ -7,6 +7,7 @@ from django.contrib.postgres.search import SearchVector
 from BulettinBoard import settings
 from bulettin_board_app.models import Announcement, Photos, Category, Locations, Watching
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class IndexView(View):
@@ -18,6 +19,8 @@ class IndexView(View):
         :return: render page index.html
         """
         annoucements = Announcement.objects.all()
+        paginator = Paginator(annoucements, 6)
+        page = request.GET.get('page')
         photos = Photos.objects.filter(announcement__in=annoucements)
         locations = Locations.objects.all()
 
